@@ -184,8 +184,9 @@ func getLogHandler(c *gin.Context) {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	// Create a new Gin router
-	r := gin.Default()
+	r := gin.New()
 
 	// Apply log middleware to all routes except the log endpoint
 	r.Use(func(c *gin.Context) {
