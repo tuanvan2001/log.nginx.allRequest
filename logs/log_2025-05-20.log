@@ -1,0 +1,19 @@
+#---
+time: 2025-06-02 16:55:48
+POST /api/v1/login
+{
+  "Accept": "*/*",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Cache-Control": "no-cache",
+  "Connection": "keep-alive",
+  "Content-Length": "51",
+  "Content-Type": "application/json",
+  "Postman-Token": "0a2356ea-acc9-41e1-bbbf-b14be43821b5",
+  "User-Agent": "PostmanRuntime/7.44.0"
+}
+
+{
+  "password": "[REDACTED]",
+  "username": "tuandev2001"
+}
+---
