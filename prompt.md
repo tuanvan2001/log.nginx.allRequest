@@ -3,7 +3,8 @@ có 1 api /*
 
 khi gọi bất kỳ endpoint nào đến server log nó sẽ lưu lại log vào file log với format như sau:
 
-#---
+# ---
+
 time: 2025-06-02 15:04:05
 method: GET
 path: /api/v1/user?name=abc

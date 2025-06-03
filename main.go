@@ -15,10 +15,11 @@ import (
 )
 
 const (
-	logDir        = "logs"
-	logFileFormat = "log_%s.log"
-	timeFormat    = "2006-01-02 15:04:05"
-	dateFormat    = "2006-01-02"
+	logDir         = "logs"
+	logFileFormat  = "log_%s.log"
+	timeFormat     = "2006-01-02 15:04:05"
+	dateFormat     = "2006-01-02"
+	maxLogFileSize = 100 * 1024 * 1024 // 100 MB
 )
 
 // ensureLogDir ensures that the log directory exists
@@ -131,6 +132,19 @@ func logRequest(c *gin.Context) {
 
 	// Open log file in append mode
 	logFilePath := getLogFilePath(dateStr)
+
+	// Check log file size and rotate if necessary
+	fileInfo, err := os.Stat(logFilePath)
+	if err == nil && fileInfo.Size() >= maxLogFileSize {
+		// Rename current log file with timestamp
+		oldLogFilePath := fmt.Sprintf("%s.%s", logFilePath, now.Format("20060102150405"))
+		err = os.Rename(logFilePath, oldLogFilePath)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to rotate log file"})
+			return
+		}
+	}
+
 	logFile, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to open log file"})
